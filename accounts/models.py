@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, UnicodeUse
 
 class User(AbstractUser):
     COMPANY_CHOICES =(
-        ("Male", ("Male")),
-        ("Female", ("Female"))
+        ("Hüquqi Şəxs", ("Hüquqi Şəxs")),
+        ("Fiziki Şəxs", ("Fiziki Şəxs"))
     )
     username_validator = UnicodeUsernameValidator
     username = models.CharField(
