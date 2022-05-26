@@ -100,7 +100,8 @@ celerybeat-schedule.*
 # Environments 
 .env 
 .venv 
-env/ 
+env/
+venv
 venv/ 
 ENV/ 
 env.bak/ 
