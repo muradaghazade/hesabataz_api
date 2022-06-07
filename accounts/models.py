@@ -31,7 +31,7 @@ class User(AbstractUser):
     voen_number = models.CharField(max_length=11, null=True, blank=False)
     has_company = models.BooleanField(default=False , help_text="")
     company_type = models.CharField(choices=COMPANY_CHOICES, max_length=50)
-    set_time = models.DateTimeField()
+    set_time = models.DateTimeField(null=True, blank=True)
     # birth_date = models.DateTimeField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
@@ -47,7 +47,10 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
-        self.slug = f'{slugify(self.first_name)}-{slugify(self.last_name)}-{self.id}'
+        if self.first_name and self.last_name:
+            self.slug = f'{slugify(self.first_name)}-{slugify(self.last_name)}-{self.id}'
+        else:
+            self.slug = f"{slugify(self.email)}-{self.id}"
         super(User, self).save(*args, **kwargs)
 
 
