@@ -24,6 +24,7 @@ class IncomeSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     incomes = IncomeSerializer(many=True, read_only=True)
     expences = ExpenceSerializer(many=True, read_only=True)
+    employes = EmployeeSerializer(many=True, read_only=True)
     class Meta:
         model = User
         exclude = ('username','password','is_superuser', 'is_staff', 'is_active', 'date_joined', 'last_login', 'groups', 'user_permissions',)

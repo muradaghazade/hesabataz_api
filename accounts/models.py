@@ -94,7 +94,7 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     passport_number = models.CharField(max_length=100)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="employes")
     position = models.CharField(max_length=100)
     salary = models.DecimalField(max_digits=10, decimal_places=2)
     start_date = models.DateTimeField(null=True, blank=True)
