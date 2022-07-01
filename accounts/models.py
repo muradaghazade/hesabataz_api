@@ -30,8 +30,22 @@ class User(AbstractUser):
     has_worker = models.BooleanField(default=False)
     voen_number = models.CharField(max_length=11, null=True, blank=False)
     has_company = models.BooleanField(default=False , help_text="")
+    income = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    expence = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    profit = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     company_type = models.CharField(choices=COMPANY_CHOICES, max_length=50)
     set_time = models.DateTimeField(null=True, blank=True)
+    company_name = models.CharField(max_length=100, null=True, blank=True)
+    category = models.CharField(max_length=100, null=True, blank=True)
+    passport_number = models.CharField(max_length=100, null=True, blank=True)
+    passport_fin = models.CharField(max_length=100, null=True, blank=True)
+    birth_date = models.DateTimeField(null=True, blank=True)
+    address = models.CharField(max_length=100, null=True, blank=True)
+    document = models.FileField(upload_to='documents/', null=True, blank=True)
+    voen = models.CharField(max_length=100, null=True, blank=True)
+    staff_count = models.IntegerField(null=True, blank=True)
+    company_sector = models.CharField(max_length=100, null=True, blank=True)
+    bank_rekvizit = models.FileField(upload_to='rekvizits/', null=True, blank=True)
     # birth_date = models.DateTimeField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
@@ -46,43 +60,41 @@ class User(AbstractUser):
         return f"{self.email}"
 
     def save(self, *args, **kwargs):
-        super(User, self).save(*args, **kwargs)
+        # super(User, self).save(*args, **kwargs)
         if self.first_name and self.last_name:
-            self.slug = f'{slugify(self.first_name)}-{slugify(self.last_name)}-{self.id}'
+            self.slug = f'{slugify(self.first_name)}-{slugify(self.last_name)}-{self.email}'
         else:
             self.slug = f"{slugify(self.email)}-{self.id}"
         super(User, self).save(*args, **kwargs)
 
 
-class Company(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="company")
-    company_name = models.CharField(max_length=100)
-    category = models.CharField(max_length=100)
-    passport_number = models.CharField(max_length=100)
-    passport_fin = models.CharField(max_length=100)
-    birth_date = models.DateTimeField(null=True, blank=True)
-    address = models.CharField(max_length=100)
-    document = models.FileField(upload_to='documents/')
-    voen = models.CharField(max_length=100)
-    staff_count = models.IntegerField()
-    company_sector = models.CharField(max_length=100)
-    bank_rekvizit = models.FileField(upload_to='rekvizits/')
-    income = models.DecimalField(max_digits=10, decimal_places=2)
-    expences = models.DecimalField(max_digits=10, decimal_places=2)
+# class Company(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="company")
+#     company_name = models.CharField(max_length=100)
+#     category = models.CharField(max_length=100)
+#     passport_number = models.CharField(max_length=100)
+#     passport_fin = models.CharField(max_length=100)
+#     birth_date = models.DateTimeField(null=True, blank=True)
+#     address = models.CharField(max_length=100)
+#     document = models.FileField(upload_to='documents/')
+#     voen = models.CharField(max_length=100)
+#     staff_count = models.IntegerField()
+#     company_sector = models.CharField(max_length=100)
+#     bank_rekvizit = models.FileField(upload_to='rekvizits/')
 
-    class Meta:
-        verbose_name = 'Company'
-        verbose_name_plural = 'Companies'
+#     class Meta:
+#         verbose_name = 'Company'
+#         verbose_name_plural = 'Companies'
 
-    def __str__(self):
-        return f"{self.email}"
+#     def __str__(self):
+#         return f"{self.email}"
 
 
 class Employee(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     passport_number = models.CharField(max_length=100)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     position = models.CharField(max_length=100)
     salary = models.DecimalField(max_digits=10, decimal_places=2)
     start_date = models.DateTimeField(null=True, blank=True)
@@ -94,3 +106,49 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Income(models.Model):
+    title = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="incomes")
+
+    class Meta:
+        verbose_name = 'Income'
+        verbose_name_plural = 'Incomes'
+
+    def __str__(self):
+        return f"{self.title}"
+
+    def save(self, *args, **kwargs):
+        if self.user:
+            income = self.user.income
+            expence = self.user.expence
+            self.user.income = income+self.amount
+            self.user.profit = self.user.income-expence
+            self.user.save()
+        super(Income, self).save(*args, **kwargs)
+
+
+class Expence(models.Model):
+    title = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="expences")
+
+    class Meta:
+        verbose_name = 'Expence'
+        verbose_name_plural = 'Expences'
+
+    def __str__(self):
+        return f"{self.title}"
+
+    def save(self, *args, **kwargs):
+        if self.user:
+            expence = self.user.expence
+            income = self.user.income
+            self.user.expence = expence+self.amount
+            self.user.profit = income-self.user.expence
+            self.user.save()
+        super(Expence, self).save(*args, **kwargs)
