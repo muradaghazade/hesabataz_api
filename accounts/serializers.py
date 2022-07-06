@@ -30,7 +30,7 @@ class IncomeSerializer(ModelSerializer):
 class SalaryTableSerializer(ModelSerializer):
     class Meta:
         model = Employee
-        fields = ('first_name', 'last_name', 'salary', 'fin', 'monthly_work_hours', 'work_hours', 'premia', 'vacation', 'life_insurance',)
+        fields = ('first_name', 'last_name', 'salary', 'fin', 'monthly_work_hours', 'work_hours', 'premia', 'vacation', 'life_insurance', 'income_tax', 'pension_fund', 'unemployment_insurance', 'health_insurance',)
 
 
 class UserSerializer(ModelSerializer):
