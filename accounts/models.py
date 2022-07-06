@@ -95,6 +95,12 @@ class Employee(models.Model):
     last_name = models.CharField(max_length=100)
     passport_number = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="employes")
+    fin = models.CharField(max_length=100, null=True, blank=True)
+    monthly_work_hours = models.IntegerField(null=True, blank=True)
+    work_hours = models.IntegerField(null=True, blank=True)
+    premia = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    vacation = models.CharField(max_length=100, null=True, blank=True)
+    life_insurance = models.BooleanField(default=False)
     position = models.CharField(max_length=100)
     salary = models.DecimalField(max_digits=10, decimal_places=2)
     start_date = models.DateTimeField(null=True, blank=True)
@@ -152,3 +158,21 @@ class Expence(models.Model):
             self.user.profit = income-self.user.expence
             self.user.save()
         super(Expence, self).save(*args, **kwargs)
+
+
+class Invoice(models.Model):
+    full_name = models.CharField(max_length=300)
+    voen = models.CharField(max_length=100)
+    service = models.CharField(max_length=500)
+    note = models.TextField(null=True, blank=True)
+    unit = models.CharField(max_length=50)
+    quantity = models.IntegerField()
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    final_amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        verbose_name = 'Invoice'
+        verbose_name_plural = 'Invoices'
+
+    def __str__(self):
+        return f"{self.full_name}'s invoice"

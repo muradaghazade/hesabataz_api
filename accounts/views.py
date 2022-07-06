@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from accounts.models import Employee, User, Income, Expence
-from accounts.serializers import EmployeeSerializer, UserSerializer, IncomeSerializer, ExpenceSerializer
+from accounts.models import Employee, User, Income, Expence, Invoice
+from accounts.serializers import EmployeeSerializer, UserSerializer, IncomeSerializer, ExpenceSerializer, SalaryTableSerializer, InvoiceSerializer
 from django.http import JsonResponse
 
 
@@ -33,3 +33,15 @@ class DataByTokenView(APIView):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+
+
+class SalaryAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(Employee, pk=kwargs['id'])
+        serializer = SalaryTableSerializer(user)
+        return JsonResponse(serializer.data)
+
+
+class InvoiceViewSet(viewsets.ModelViewSet):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer

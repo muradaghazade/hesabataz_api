@@ -1,6 +1,12 @@
 from rest_framework.serializers import ModelSerializer
 
-from accounts.models import User, Income, Expence, Employee
+from accounts.models import User, Income, Expence, Employee, Invoice
+
+
+class InvoiceSerializer(ModelSerializer):
+    class Meta:
+        model = Invoice
+        fields = '__all__'
 
 
 class EmployeeSerializer(ModelSerializer):
@@ -19,6 +25,12 @@ class IncomeSerializer(ModelSerializer):
     class Meta:
         model = Income
         fields = ('title', 'amount', 'date', 'user')
+
+
+class SalaryTableSerializer(ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = ('first_name', 'last_name', 'salary', 'fin', 'monthly_work_hours', 'work_hours', 'premia', 'vacation', 'life_insurance',)
 
 
 class UserSerializer(ModelSerializer):
