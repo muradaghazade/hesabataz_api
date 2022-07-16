@@ -118,6 +118,17 @@ class Employee(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
+class WorkCategory(models.Model):
+    title = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = 'WorkCategory'
+        verbose_name_plural = 'WorkCategories'
+
+    def __str__(self):
+        return f"{self.title}"
+
+
 class Income(models.Model):
     title = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)

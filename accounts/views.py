@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from accounts.models import Employee, User, Income, Expence, Invoice
 from accounts.serializers import EmployeeSerializer, UserSerializer, IncomeSerializer, ExpenceSerializer, SalaryTableSerializer, InvoiceSerializer
 from django.http import JsonResponse
+from math import floor
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -45,3 +46,11 @@ class SalaryAPIView(APIView):
 class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
     serializer_class = InvoiceSerializer
+
+
+class SalaryCalculator(APIView):
+    def post(self, request, *args, **kwargs):
+        salary = request.POST.get('salary')
+        salary = float(salary)+97.68+2.22+8.88
+        salary  = "{:.2f}".format(salary)
+        return JsonResponse({'salary':salary})

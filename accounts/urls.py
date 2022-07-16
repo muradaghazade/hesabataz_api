@@ -21,4 +21,5 @@ urlpatterns = [
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('salary-table/<int:id>/', SalaryAPIView.as_view(), name='salary-table'),
+    path('salary-calculator/', SalaryCalculator.as_view(), name='salary-calculator'),
 ]
