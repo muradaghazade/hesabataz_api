@@ -191,3 +191,28 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"{self.full_name}'s invoice"
+
+
+class DocumentExample(models.Model):
+    title = models.CharField(max_length=300)
+    document = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'DocumentExample'
+        verbose_name_plural = 'DocumentExamples'
+
+    def __str__(self):
+        return f"{self.title}"
+
+
+class Document(models.Model):
+    document_example = models.ForeignKey(DocumentExample, on_delete=models.CASCADE, related_name="documents")
+    first_name = models.CharField(max_length=300)
+    last_name = models.CharField(max_length=300)
+
+    class Meta:
+        verbose_name = 'Document'
+        verbose_name_plural = 'Document'
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
