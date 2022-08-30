@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from accounts.models import User, Income, Expence, Employee, Invoice
+from accounts.models import User, Income, Expence, Employee, Invoice, WorkField
 
 
 class InvoiceSerializer(ModelSerializer):
@@ -40,3 +40,9 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         exclude = ('username','password','is_superuser', 'is_staff', 'is_active', 'date_joined', 'last_login', 'groups', 'user_permissions',)
+
+
+class WorkFieldSerializer(ModelSerializer):
+    class Meta:
+        model = WorkField
+        fields = '__all__'

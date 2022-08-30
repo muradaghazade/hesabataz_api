@@ -1,5 +1,5 @@
 from django.urls import path, include
-from accounts.views import UserViewSet, IncomeViewSet, ExpenceViewSet, EmployeeViewSet, SalaryAPIView, InvoiceViewSet
+from accounts.views import UserViewSet, IncomeViewSet, ExpenceViewSet, EmployeeViewSet, SalaryAPIView, InvoiceViewSet, CurrentTaxReference, WorkFieldViewSet
 from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 from .views import *
@@ -14,6 +14,7 @@ router.register(r'income', IncomeViewSet)
 router.register(r'expence', ExpenceViewSet)
 router.register(r'employee', EmployeeViewSet)
 router.register(r'invoice', InvoiceViewSet)
+router.register(r'workfield', WorkFieldViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -22,4 +23,8 @@ urlpatterns = [
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('salary-table/<int:id>/', SalaryAPIView.as_view(), name='salary-table'),
     path('salary-calculator/', SalaryCalculator.as_view(), name='salary-calculator'),
+    path('current-tax-reference/', CurrentTaxReference.as_view(), name='current-tax-reference'),
+    path('second-current-tax-reference/', SecondCurrentTaxReference.as_view(), name='second-current-tax-reference'),
+    path('rent-tax/', RentTax.as_view(), name='rent-tax'),
+    path('income-tax/', IncomeTax.as_view(), name='income-tax'),
 ]

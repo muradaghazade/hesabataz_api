@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Employee, Income, Expence
+from .models import User, Employee, Income, Expence, WorkField
 from django.contrib.auth.models import Group
 
 
@@ -38,11 +38,26 @@ class ExpenceAdmin(admin.ModelAdmin):
     list_editable = ['title', 'amount', 'date',]
 
 
+class ExpenceAdmin(admin.ModelAdmin):
+    model = Expence
+    list_display = ['id', 'title', 'amount', 'date',] 
+    list_display_links = ('id',)
+    list_editable = ['title', 'amount', 'date',]
+
+
+class WorkFieldAdmin(admin.ModelAdmin):
+    model = WorkField
+    list_display = ['id', 'title', 'mdss', 'its', 'summary_amount',] 
+    list_display_links = ('id',)
+    list_editable = ['title', 'mdss', 'its',]
+
+
 admin.site.register(User, UserAdmin)
-# admin.site.register(Company, CompanyAdmin)
+admin.site.register(WorkField, WorkFieldAdmin)
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Income, IncomeAdmin)
 admin.site.register(Expence, ExpenceAdmin)
+
 admin.site.unregister(Group)
 
 admin.site.site_header = "Hesabat.az"

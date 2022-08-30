@@ -216,3 +216,22 @@ class Document(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class WorkField(models.Model):
+    title = models.CharField(max_length=300)
+    mdss = models.DecimalField(max_digits=10, decimal_places=2)
+    its = models.DecimalField(max_digits=10, decimal_places=2)
+    summary_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Work Field'
+        verbose_name_plural = 'Work Fields'
+
+    def __str__(self):
+        return f"{self.title}"
+
+    def save(self, *args, **kwargs):
+        super(WorkField, self).save(*args, **kwargs)
+        self.summary_amount = self.mdss+self.its
+        super(WorkField, self).save(*args, **kwargs)
