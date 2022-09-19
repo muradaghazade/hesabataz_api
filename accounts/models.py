@@ -235,3 +235,15 @@ class WorkField(models.Model):
         super(WorkField, self).save(*args, **kwargs)
         self.summary_amount = self.mdss+self.its
         super(WorkField, self).save(*args, **kwargs)
+
+
+class CobsOffer(models.Model):
+    title = models.CharField(max_length=300)
+    offer = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Cobs Offer'
+        verbose_name_plural = 'Cobs Offers'
+
+    def __str__(self):
+        return f"{self.title}"

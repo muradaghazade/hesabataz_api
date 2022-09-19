@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from accounts.models import User, Income, Expence, Employee, Invoice, WorkField
+from accounts.models import User, Income, Expence, Employee, Invoice, WorkField, Document, DocumentExample, CobsOffer
 
 
 class InvoiceSerializer(ModelSerializer):
@@ -45,4 +45,22 @@ class UserSerializer(ModelSerializer):
 class WorkFieldSerializer(ModelSerializer):
     class Meta:
         model = WorkField
+        fields = '__all__'
+
+
+class DocumentSerializer(ModelSerializer):
+    class Meta:
+        model = Document
+        fields = '__all__'
+
+
+class DocumentExampleSerializer(ModelSerializer):
+    class Meta:
+        model = DocumentExample
+        fields = '__all__'
+
+
+class CobsOfferSerializer(ModelSerializer):
+    class Meta:
+        model = CobsOffer
         fields = '__all__'

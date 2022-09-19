@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from accounts.models import Employee, User, Income, Expence, Invoice, WorkField
-from accounts.serializers import EmployeeSerializer, UserSerializer, IncomeSerializer, ExpenceSerializer, SalaryTableSerializer, InvoiceSerializer, WorkFieldSerializer
+from accounts.models import Employee, User, Income, Expence, Invoice, WorkField, Document, DocumentExample, CobsOffer
+from accounts.serializers import EmployeeSerializer, UserSerializer, IncomeSerializer, ExpenceSerializer, SalaryTableSerializer, InvoiceSerializer, WorkFieldSerializer, DocumentSerializer, DocumentExampleSerializer, CobsOfferSerializer
 from django.http import JsonResponse
 from math import floor
 
@@ -117,3 +117,23 @@ class IncomeTax(APIView):
         pre2_a13 = pre_a13*0.5
         a13 = b4-pre2_a13
         return JsonResponse({'A12':a12, 'A13':a13})
+
+
+#Sened Numuneleri
+
+
+class DocumentViewSet(viewsets.ModelViewSet):
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer
+
+class DocumentExampleViewSet(viewsets.ModelViewSet):
+    queryset = DocumentExample.objects.all()
+    serializer_class = DocumentExampleSerializer
+
+
+#Koblarin Teklifi
+
+
+class CobsOfferViewSet(viewsets.ModelViewSet):
+    queryset = CobsOffer.objects.all()
+    serializer_class = CobsOfferSerializer

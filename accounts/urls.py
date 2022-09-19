@@ -1,5 +1,5 @@
 from django.urls import path, include
-from accounts.views import UserViewSet, IncomeViewSet, ExpenceViewSet, EmployeeViewSet, SalaryAPIView, InvoiceViewSet, CurrentTaxReference, WorkFieldViewSet
+from accounts.views import UserViewSet, IncomeViewSet, ExpenceViewSet, EmployeeViewSet, SalaryAPIView, InvoiceViewSet, CurrentTaxReference, WorkFieldViewSet, DocumentViewSet, DocumentExampleViewSet, CobsOfferViewSet
 from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 from .views import *
@@ -15,6 +15,9 @@ router.register(r'expence', ExpenceViewSet)
 router.register(r'employee', EmployeeViewSet)
 router.register(r'invoice', InvoiceViewSet)
 router.register(r'workfield', WorkFieldViewSet)
+router.register(r'document', DocumentViewSet)
+router.register(r'document-example', DocumentExampleViewSet)
+router.register(r'cobs-offer', CobsOfferViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
