@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Employee, Income, Expence, WorkField
+from .models import User, Employee, Income, Expence, WorkField, Invoice, Document, DocumentExample, CobsOffer, WorkCategory
 from django.contrib.auth.models import Group
 
 
@@ -57,6 +57,8 @@ admin.site.register(WorkField, WorkFieldAdmin)
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Income, IncomeAdmin)
 admin.site.register(Expence, ExpenceAdmin)
+
+admin.site.register([Invoice, CobsOffer, Document, DocumentExample, WorkCategory,])
 
 admin.site.unregister(Group)
 
