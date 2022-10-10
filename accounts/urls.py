@@ -21,6 +21,7 @@ router.register(r'cobs-offer', CobsOfferViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('register/', RegisterUserAPI.as_view(), name='register'),
     path('token-data/', DataByTokenView.as_view(), name='token_data'),
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),

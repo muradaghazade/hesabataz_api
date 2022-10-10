@@ -3,9 +3,19 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from accounts.models import Employee, User, Income, Expence, Invoice, WorkField, Document, DocumentExample, CobsOffer
-from accounts.serializers import EmployeeSerializer, UserSerializer, IncomeSerializer, ExpenceSerializer, SalaryTableSerializer, InvoiceSerializer, WorkFieldSerializer, DocumentSerializer, DocumentExampleSerializer, CobsOfferSerializer
+from accounts.serializers import EmployeeSerializer, UserSerializer, IncomeSerializer, ExpenceSerializer, SalaryTableSerializer, InvoiceSerializer, WorkFieldSerializer, DocumentSerializer, DocumentExampleSerializer, CobsOfferSerializer, UserRegisterSerializer
 from django.http import JsonResponse
-from math import floor
+from rest_framework.generics import CreateAPIView
+
+
+class RegisterUserAPI(CreateAPIView):
+    model = User
+    serializer_class = UserRegisterSerializer
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        # Wishlist.objects.create(user=user)
+        # Cart.objects.create(user=user)
 
 
 class UserViewSet(viewsets.ModelViewSet):

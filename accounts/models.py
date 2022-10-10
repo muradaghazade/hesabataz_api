@@ -46,6 +46,7 @@ class User(AbstractUser):
     staff_count = models.IntegerField(null=True, blank=True)
     company_sector = models.CharField(max_length=100, null=True, blank=True)
     bank_rekvizit = models.FileField(upload_to='rekvizits/', null=True, blank=True)
+    password2 = models.CharField(('password2'), max_length=200, editable=False)
     # birth_date = models.DateTimeField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
